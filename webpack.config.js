@@ -34,9 +34,9 @@ const useBabelInDevelopment = false;
  * supported. The order of this array is important, as the order of outputted styles will match. Svelte component
  * styles will always appear last in the bundle.
  */
-const stylesheets = [
-    './src/styles/index.scss'
-];
+//const stylesheets = [
+//    './src/styles/index.scss'
+//];
 
 
 module.exports = {
@@ -76,7 +76,8 @@ module.exports = {
                             optimistic: true,
                         },
                         preprocess: Preprocess({
-                            scss: true,
+                            postcss: true,
+                            scss: false,
                             postcss: {
                                 plugins: [
                                     require('autoprefixer')
@@ -85,41 +86,6 @@ module.exports = {
                         }),
                     }
                 }
-            },
-            {
-                test: /\.(scss|sass)$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: !prod,
-                            sourceMap: !prod || sourceMapsInProduction
-                        }
-                    },
-                    'css-loader',
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: [
-                                require('autoprefixer')
-                            ]
-                        }
-                    },
-                    'sass-loader',
-                ]
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: !prod,
-                            sourceMap: !prod || sourceMapsInProduction
-                        }
-                    },
-                    'css-loader',
-                ]
             },
             {
                 test: /\.ts$/,
@@ -147,6 +113,7 @@ module.exports = {
 };
 
 // Add stylesheets to the build
+/*
 if (Array.isArray(stylesheets) || typeof stylesheets === 'string') {
     if (!Array.isArray(stylesheets)) {
         stylesheets = [stylesheets];
@@ -157,7 +124,7 @@ if (Array.isArray(stylesheets) || typeof stylesheets === 'string') {
         stylesheets
     );
 }
-
+*/
 // Load path mapping from tsconfig
 const tsconfigPath = path.resolve(__dirname, 'tsconfig.json');
 const tsconfig = require('fs').existsSync(tsconfigPath) ? require(tsconfigPath) : {};
